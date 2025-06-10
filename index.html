@@ -13,10 +13,47 @@
     }
 
     header {
-      background-color: #7d2ae8;
+      position: relative;
       color: white;
-      padding: 2rem 1rem;
       text-align: center;
+      padding: 100px 20px;
+      background: url('office-bg.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+
+    header * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      height: 60px;
+      z-index: 2;
+    }
+
+    .lang-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: white;
+      color: #7d2ae8;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 2;
     }
 
     nav {
@@ -55,6 +92,44 @@
       border-left: 5px solid #7d2ae8;
     }
 
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    button[type="submit"] {
+      background-color: #7d2ae8;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #8e3df5;
+    }
+
+    #confirmation {
+      display: none;
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+
     footer {
       background-color: #111;
       color: white;
@@ -81,41 +156,179 @@
 <body>
 
   <header>
-    <h1>Chamzen Services</h1>
-    <p>Professional Office Cleaning in Berlin</p>
+    <img src="logo.png" alt="Chamzen Logo" class="logo" />
+    <button class="lang-toggle" onclick="toggleLanguage()">DE</button>
+    <h1 id="title">Chamzen Services</h1>
+    <p id="subtitle">Professional Office Cleaning in Berlin</p>
   </header>
 
   <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
+    <a href="#about" id="nav-about">About</a>
+    <a href="#services" id="nav-services">Services</a>
+    <a href="#pricing" id="nav-pricing">Pricing</a>
+    <a href="#contact" id="nav-contact">Contact</a>
   </nav>
 
   <section id="about">
-    <h2>About Us</h2>
-    <p>Chamzen Services is committed to delivering high-quality, reliable office cleaning solutions tailored to your needs. We are based in Berlin and offer a professional cleaning experience.</p>
+    <h2 id="about-title">About Us</h2>
+    <p id="about-text">Chamzen Services is committed to delivering high-quality, reliable office cleaning solutions tailored to your needs. We are based in Berlin and offer a professional cleaning experience.</p>
   </section>
 
   <section id="services">
-    <h2>Our Services</h2>
-    <ul>
-      <li>✔️ Office Cleaning</li>
-      <li>✔️ Floor and Carpet Maintenance</li>
-      <li>✔️ Window & Glass Cleaning</li>
-      <li>✔️ Washroom Sanitization</li>
+    <h2 id="services-title">Our Services</h2>
+    <ul id="services-list">
+      <li>✔️ Regular Office Cleaning</li>
+      <li>✔️ Dusting and wiping all surfaces</li>
+      <li>✔️ Vacuuming and mopping floors</li>
+      <li>✔️ Emptying trash bins</li>
+      <li>✔️ Cleaning and sanitizing bathrooms</li>
+      <li>✔️ Kitchen and break room cleaning</li>
     </ul>
-    <a href="#contact" class="button">Get a Free Trial</a>
+  </section>
+
+  <section id="pricing">
+    <h2 id="pricing-title">Simple Pricing</h2>
+    <p id="pricing-desc">We believe in transparent pricing with no hidden fees. Our rates are competitive and provide excellent value for the quality of service we deliver.</p>
+    <h3 id="rate-title">Standard Rate</h3>
+    <p><strong>€25/hour</strong><br>No hidden fees or charges</p>
+    <ul id="pricing-list">
+      <li>✔️ All cleaning supplies included</li>
+      <li>✔️ Flexible scheduling options</li>
+      <li>✔️ No contracts required</li>
+      <li>✔️ Satisfaction guaranteed</li>
+      <li>✔️ Free consultation and estimate</li>
+    </ul>
+    <a href="#contact" class="button" id="consultation-button">Book Your Free Consultation</a>
   </section>
 
   <section id="contact">
-    <h2>Contact Us</h2>
-    <p><strong>Email:</strong> info@chamzen.com</p>
+    <h2 id="contact-title">Contact Us</h2>
+    <p><strong>Email:</strong> info.chamzenservices@gmail.com</p>
     <p><strong>Phone:</strong> +49 123 456789</p>
+
+    <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="_replyto" placeholder="Your Email" required>
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div id="confirmation">✅ Thank you! Your message has been sent. We'll get back to you shortly.</div>
   </section>
 
   <footer>
-    &copy; 2025 Chamzen Services | Designed in Berlin
+    <p id="footer-text">&copy; 2025 Chamzen Services | Designed in Berlin</p>
   </footer>
+
+  <script>
+    const lang = {
+      en: {
+        title: "Chamzen Services",
+        subtitle: "Professional Office Cleaning in Berlin",
+        "nav-about": "About",
+        "nav-services": "Services",
+        "nav-pricing": "Pricing",
+        "nav-contact": "Contact",
+        "about-title": "About Us",
+        "about-text": "Chamzen Services is committed to delivering high-quality, reliable office cleaning solutions tailored to your needs. We are based in Berlin and offer a professional cleaning experience.",
+        "services-title": "Our Services",
+        "services-list": [
+          "✔️ Regular Office Cleaning",
+          "✔️ Dusting and wiping all surfaces",
+          "✔️ Vacuuming and mopping floors",
+          "✔️ Emptying trash bins",
+          "✔️ Cleaning and sanitizing bathrooms",
+          "✔️ Kitchen and break room cleaning"
+        ],
+        "pricing-title": "Simple Pricing",
+        "pricing-desc": "We believe in transparent pricing with no hidden fees. Our rates are competitive and provide excellent value for the quality of service we deliver.",
+        "rate-title": "Standard Rate",
+        "pricing-list": [
+          "✔️ All cleaning supplies included",
+          "✔️ Flexible scheduling options",
+          "✔️ No contracts required",
+          "✔️ Satisfaction guaranteed",
+          "✔️ Free consultation and estimate"
+        ],
+        "consultation-button": "Book Your Free Consultation",
+        "contact-title": "Contact Us",
+        "footer-text": "© 2025 Chamzen Services | Designed in Berlin"
+      },
+      de: {
+        title: "Chamzen Dienstleistungen",
+        subtitle: "Professionelle Büroreinigung in Berlin",
+        "nav-about": "Über uns",
+        "nav-services": "Dienstleistungen",
+        "nav-pricing": "Preise",
+        "nav-contact": "Kontakt",
+        "about-title": "Über uns",
+        "about-text": "Chamzen Services bietet hochwertige und zuverlässige Büroreinigungslösungen, maßgeschneidert für Ihre Bedürfnisse in Berlin.",
+        "services-title": "Unsere Dienstleistungen",
+        "services-list": [
+          "✔️ Regelmäßige Büroreinigung",
+          "✔️ Abstauben und Wischen aller Oberflächen",
+          "✔️ Staubsaugen und Wischen der Böden",
+          "✔️ Leeren der Mülleimer",
+          "✔️ Reinigung und Desinfektion der Badezimmer",
+          "✔️ Reinigung der Küche und des Pausenraums"
+        ],
+        "pricing-title": "Einfache Preisgestaltung",
+        "pricing-desc": "Wir glauben an transparente Preise ohne versteckte Gebühren. Unsere Tarife sind wettbewerbsfähig und bieten hervorragenden Gegenwert.",
+        "rate-title": "Standardtarif",
+        "pricing-list": [
+          "✔️ Reinigungsmittel inklusive",
+          "✔️ Flexible Terminvereinbarung",
+          "✔️ Keine Vertragsbindung",
+          "✔️ Zufriedenheitsgarantie",
+          "✔️ Kostenlose Beratung & Angebot"
+        ],
+        "consultation-button": "Jetzt kostenlose Beratung buchen",
+        "contact-title": "Kontaktieren Sie uns",
+        "footer-text": "© 2025 Chamzen Dienstleistungen | Design aus Berlin"
+      }
+    };
+
+    let currentLang = "en";
+
+    function toggleLanguage() {
+      currentLang = currentLang === "en" ? "de" : "en";
+      document.querySelector(".lang-toggle").textContent = currentLang === "en" ? "DE" : "EN";
+
+      for (const key in lang[currentLang]) {
+        const el = document.getElementById(key);
+        if (!el) continue;
+
+        if (Array.isArray(lang[currentLang][key])) {
+          el.innerHTML = lang[currentLang][key].map(item => `<li>${item}</li>`).join("");
+        } else {
+          el.textContent = lang[currentLang][key];
+        }
+      }
+    }
+
+    // Handle form submission with confirmation
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = this;
+      const confirmation = document.getElementById("confirmation");
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          form.style.display = "none";
+          confirmation.style.display = "block";
+        } else {
+          alert("Error submitting form. Please try again.");
+        }
+      }).catch(() => alert("Submission failed. Please try again later."));
+    });
+  </script>
 
 </body>
 </html>
